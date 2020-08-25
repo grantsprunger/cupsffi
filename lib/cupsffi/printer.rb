@@ -129,7 +129,7 @@ class CupsPrinter
     }
   end
 
-  def print_file(file_name, options = {})
+  def print_file(file_name, options = {}, title = nil)
     raise "File not found: #{file_name}" unless File.exists? file_name
 
     options_pointer = nil
@@ -143,7 +143,9 @@ class CupsPrinter
       options_pointer = options_pointer.get_pointer(0)
     end
 
-    job_id = CupsFFI::cupsPrintFile2(@connection, @name, file_name, file_name, num_options, options_pointer)
+    job_title = title.nil? ? file_name : title
+
+    job_id = CupsFFI::cupsPrintFile2(@connection, @name, file_name, job_title, num_options, options_pointer)
 
     if job_id == 0
       last_error = CupsFFI::cupsLastErrorString()
