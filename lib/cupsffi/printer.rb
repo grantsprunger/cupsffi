@@ -125,7 +125,7 @@ class CupsPrinter
           when "5" then :stopped
           else :unknown
         end,
-      :reasons => o['printer-state-reasons'].split(/,/)
+      :reasons => o['printer-state-reasons'] ? o['printer-state-reasons'].split(/,/) : []
     }
   end
 
